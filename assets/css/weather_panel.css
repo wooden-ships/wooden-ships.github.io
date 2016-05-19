@@ -1,0 +1,74 @@
+#summary-window{
+	overflow: hidden !important;
+	right: 0px;
+	position: absolute;
+	top: 0px;
+	width: 300px;
+	height: calc(50% - 25px)!important;
+	max-height: 50%!important;
+	background-color: rgba(255, 255, 255, 0.75);
+	z-index: 1000000;
+	padding-top: 5px;
+	border-radius: 5px!important;
+}
+
+#text-summary{
+	height: 45%;
+}
+#wind-summary{
+	height: 45%;
+}
+#wind-rose{
+	height:55%;
+}
+.weather-holder{
+	padding-left: 5px;
+	height: 33%;
+}
+.weather-header{
+	text-align: left;
+	font-weight: 300;
+	display: block;
+	width: 100%;
+	margin-bottom: 7px;
+}
+.wind-holder{
+	height: 40%;
+	padding-right: 15px!important;
+}
+.weather-data{
+	text-align: center;
+	font-weight: bold;
+	display: block;
+	width:100%;
+	padding-right: 10px;
+	margin-bottom: 0px;
+	margin-top: 3px;
+}
+.weather-num{
+	font-size:larger;
+	margin-top: 25px;
+}
+#airTempReading, #wsReading{
+	padding-top: 7px;
+}
+/*#weather-controls{
+	top: 0px;
+	height: 25px;
+	position: absolute;
+	right: 0px;
+	z-index: 100;
+	width:300px;
+	padding-right: 20px;
+	background-color: black;
+	color: white;
+}*/
+#minimize-wx-panel{
+	display: inline;
+	float:right;
+	color:white;
+}
+#weather-control-header{
+	display: inline;
+}
+

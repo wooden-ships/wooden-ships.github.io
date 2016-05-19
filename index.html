@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Wooden Ships</title>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	
+      <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+      <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+   		<link rel="stylesheet" href="assets/css/bootstrap.vertical-tabs.min.css">
+
+	<!--put your external stylesheet links here-->
+	<link rel="stylesheet" href="assets/css/style.css"/>
+	<link rel='stylesheet' href='assets/css/weather_panel.css'/>
+</head>
+
+<body>
+	<div id='mainContainer'>
+		<div id='nav'>
+
+			<ul class='list-group' id='nav-list-group'>
+				<li class='list-group-item nav-item active' id='nav-item-intro' data-panel='intro' data-toggle="tooltip" title="Overview">
+					<img src="assets/img/Icon_captain.png" class='img-responsive li-img' alt="ship logo" />
+
+				</li>
+
+				<li class='list-group-item nav-item' id='nav-item-country' data-panel='country' data-toggle="tooltip" title="Country Filter">
+										
+					<img src="assets/img/Icon_BritishFlag.png" class='img-responsive li-img'  id='nat-flag-img' alt="ship logo" />
+
+				<li class='list-group-item nav-item' id='nav-item-weather' data-panel='weather' data-toggle="tooltip" title="Weather Filter">
+										
+					<img src="assets/img/Icon_weather.png" class='img-responsive li-img' alt="ship logo" />
+
+				</li>
+				<li class='list-group-item nav-item' id='nav-item-wind' data-panel='wind' data-toggle="tooltip" title="Wind Filter">
+
+					<img src="assets/img/Icon_wind4.png" class='img-responsive li-img' alt="ship logo" />
+
+				</li>
+
+				<li class='list-group-item nav-item' id='nav-item-feed' data-panel='feed' data-toggle="tooltip" title="Captain's Log">
+					
+					<img src="assets/img/Icon_quill.png" class='img-responsive li-img' class="nav-image" alt="ship logo" />
+
+				</li>
+
+			</ul>
+		</div>
+		
+		<div id='map' class=''>
+			<!-- map go here-->
+		</div>
+		<div id='weather-controls' class='row'>
+			<h4 id='weather-control-header'>Weather Observations</h4>
+			<button id='minimize-wx-panel'><span class='glyphicon glyphicon-minus' id='wx-panel-glyph'></span></button>
+		</div> <!-- minimize button-->
+				
+		<div id='summary-window' class='row'>
+			<div id='text-summary' class='col-xs-6'> 
+					<div id='airTempHolder' class='weather-holder row'>
+						<h5 id='airTemp' class='weather-header'>Air Temp: </h5>
+						<h5 id='airTempReading' class='weather-data '><span id='airTempText' class='weather-num'>--</span> &deg;C</h5>
+					</div>
+					<div id='pressureHolder' class='weather-holder row'>
+						<h5 id='pressure' class='weather-header'>Pressure: </h5>
+						<h5 id='pressureReading' class='weather-data '><span id='pressureText' class='weather-num'>--</span> mmHg</h5>
+					</div>
+					<div id='commonHolder' class='weather-holder row'>
+						<h5 id='common' class='weather-header'>W<sub>X</sub>: </h5>
+						<h6 id='commonReading' class='weather-data '><span id='commonText' class='weather-num'>--</span>
+							<span id='numCommon' class='text-muted'></span></h6>
+					</div>
+					
+				</div>
+				<div id='wind-summary' class='col-xs-6'>
+					<div id='wsHolder' class='wind-holder row'>
+						<h5 id='ws' class='weather-header'>Mean Wind Speed: </h5>
+						<h5 id='wsReading' class='weather-data'><span id='wsText' class='weather-num'>--</span> m/s</h5>
+					</div>
+					<div id='wdHolder' class='wind-holder row'>
+						<h5 id='wd' class='weather-header' >Mean Wind Direction: </h5>
+						<h5 id='wdReading' class='weather-data'><span id='wdText' class='weather-num'>--</span> &deg;</h5>
+					</div>
+						
+				</div>
+				<div id='wind-rose' class='col-xs-12'>
+				</div>
+
+			
+		</div>
+			</div> <!--end main row-->
+			
+		<div id='reproject-holder'>
+		<button id='home' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-home'></span></button><br />
+		<h6>Projection:</h6>
+		<select id='proj-select'>
+			<option value='cylindrical'>Cylindrical</option>
+			<option value='robinson'>Robinson</option>
+			<option value='globe'>Globe</option>
+		</select><br />
+	</div>
+	
+	<div id='intro-panel' class='nav-panel'>
+
+	<img src="assets/img/Icon_help.png" id="help-icon" data-clicked='false'>
+
+	<div id="help-info">
+
+
+	<div id="arrow1" class="help-div"> <p class="help_overview"><img src="assets/img/Icon_arrow.png" id="arrow_left" alt="arrow" />Overview</p></div>
+
+	<div id="arrow2" class="help-div"> <p class="help_overview"><img src="assets/img/Icon_arrow.png" id="arrow_left" alt="arrow" />Country Filter </p></div>
+
+	<div id="arrow3" class="help-div"> <p class="help_overview"><img src="assets/img/Icon_arrow.png" id="arrow_left" alt="arrow" />Weather Filter </p></div>
+
+	<div id="arrow4" class="help-div"> <p class="help_overview"><img src="assets/img/Icon_arrow.png" id="arrow_left" alt="arrow" />Wind Filter </p></div>
+
+	<div id="arrow5" class="help-div"> <p class="help_overview"><img src="assets/img/Icon_arrow.png" id="arrow_left" alt="arrow" />Captain's Logs </p></div>
+	
+	<div id="arrow6" class="help-div"> <p class="help_overview">Info Panel</p><img src="assets/img/Icon_arrowRight.png" id="arrow_right" alt="arrow" /></div>
+
+	<div id="arrow7" class="help-div"> <p class="help_overview">Change Projection and Reset Map</p><img src="assets/img/Icon_arrowRight.png" id="arrow_right" alt="arrow" /></div>
+
+	<div id="arrow8" class="help-div"> <p class="help_overview">Time Filter<img src="assets/img/Icon_arrowBottom.png" id="arrow_bottom" alt="arrow" /></p></div>
+	</div>
+
+	<div id="help-text"> 
+
+	<h2 id="title"> Wooden Ships Help</h2>
+
+	<p><strong>Overview:</strong> Introductory information and how to navigate Wooden Ships.</p> 
+
+	<p><strong>Country Filter:</strong> Filter ships by country. Choose between British, Dutch, French, and Spanish ships. Only one country can be displayed at a time!</p> 
+
+	<p><strong>Weather Filter:</strong> Filter by weather observations to see weather patterns over the high seas. Choose between snow, thunder and lightning, rain, sea ice, hail, gusty winds, fog, and air temperature. </p> 
+
+	<p><strong>Wind Filter:</strong> Filter by both wind direction and wind speed to see wind patterns across the oceans.</p> 
+
+	<p><strong>Captain's Log:</strong> What observations were naval captains making on their voyages? Use this feed to cue into observations about weather, travel info, conflicts, life on board, or other encounters. Simply click on a hexbin.</p> 
+
+	<p><strong>Info Panel:</strong> Use the info panel to get a summary of weather conditions at sea. Hover over a hexbin to see corresponding air temp, wind speed, wind direction, and air pressure.  </p> 
+
+	<p><strong>Change Projection and Reset Map:</strong> Change your projection from Robinson, a compromise project (yes, we know this isn't correct), to a cylindrical equal-area (the optimal choice for a hexbin choropleth), to a globe (otherwise known as snazzy eye candy).</p> 
+
+	<p><strong>Time Filter:</strong> See ships that were out at sea at certain points in time. Simply scroll the bar through time sequence. To adjust the time-period you wish to filter by, drag the bar at either end to resize.  </p> 
+
+	</div>
+
+	<div id="intro-text">
+
+	<h2 id="title"> Wooden Ships Overview </h2>
+
+
+	<p><strong>Wooden Ships</strong> explores European maritime activity and observations from 1750 to 1850. The data consists of logbook entries written by the captain of each ship. The location of each ship is spatially aggregated in hexagonal bins. Filter the map by country or time to better understand varying shipping patterns by colonial powers. Hover over the ships or hexbins to view summary weather statistics. Click a hexbin to view handwritten log entries about weather observations as well as candid events at sea from the captains! Select ships with particular weather or climatic features, such as temperature recordings or encounters with sea ice. Check out wind speed patterns across the Atlantic. This application will enhance your understanding of the geography and environmental history of maritime trade!
+	</p>
+
+	<p>Data sources: <a href="http://pendientedemigracion.ucm.es/info/cliwoc/">Climatological Database for the World's Oceans 1750-1850</a> for digitized shipping logs, <a href="http://www.naturalearthdata.com/">Natural Earth</a> for line work,  and <a href="https://thenounproject.com/">The Noun Project</a> for icons.</p>
+
+	<p>Cartographers/developers/designers/shipping enthusiasts: <a href="http://www.scottsfarley.com/">Scott Farley</a>, <a href="http://geography.wisc.edu/students/profile.php?p=1101">Starr Moss</a>, and <a href="http://meghankelly-cartography.github.io/">Meghan Kelly</a>.</p>
+		
+	</div>
+
+	</div>
+
+	<div id='country-panel' class='nav-panel control-panel'>
+
+		<h3 id="panel_title">Wooden Ships</h3>
+		<h3 class="title">Nationality</h3>
+		<ul class='control-list list-group' id='nationality-select-list'>
+			<li id='british-nation-select' value='British' class='nation-select list-group-item select-item active'>British</li>
+			<li id='dutch-nation-select'  value='Dutch' class='nation-select list-group-item select-item'>Dutch</li>
+			<li id='french-nation-select' value='French'  class='nation-select list-group-item select-item'>French</li>
+			<li id='spanish-nation-select' value='Spanish'  class='nation-select list-group-item select-item'>Spanish</li>
+		</ul>
+
+	</div>
+	
+	<div id='weather-panel' class='nav-panel control-panel'>
+			<h3 id="panel_title">Wooden Ships</h3>
+			<h3 class="title">Weather Type</h3>
+			<ul class='control-list list-group' id='weather-select-list'>
+				<li id='all-weather-select active'  class='weather-select list-group-item select-item active'>All Weather Types</li>
+				<li id='snow-weather-select' class='weather-select list-group-item select-item'>Snow</li>
+				<li id='thunder-weather-select' class='weather-select list-group-item select-item'>Thunder & Lightning</li>
+				<li id='rain-weather-select' class='weather-select list-group-item select-item'>Rain</li>
+				<li id='sea-ice-weather-select' class='weather-select list-group-item select-item'>Sea Ice</li>
+				<li id='hail-weather-select' class='weather-select list-group-item select-item'>Hail</li>
+				<li id='gusts-weather-select' class='weather-select list-group-item select-item'>Gusty winds</li>
+				<li id='fog-weather-select' class='weather-select list-group-item select-item'>Fog</li>
+				<li id='fog-weather-select' class='weather-select list-group-item select-item'>Air Temperature Readings</li>
+			</ul>
+
+	</div>
+
+	
+	<div id='wind-panel' class='nav-panel control-panel'>
+		<h3 id="panel_title">Wooden Ships</h3>
+		<h3 class="title">Winds</h3>
+		<label>Wind Direction</label>
+		<ul class='control-list list-group ' id='wind-direction-select-list'>
+			<li id='north-wd-select' class='wd-select list-group-item select-item active' data-dir='N'>North</li>
+			<li id='northeast-wd-select' class='wd-select list-group-item select-item active' data-dir='NE'>Northeast</li>
+			<li id='east-wd-select' class='wd-select list-group-item select-item active' data-dir='E'>East</li>
+			<li id='southeast-wd-select' class='wd-select list-group-item select-item active' data-dir='SE'>Southeast</li>
+			<li id='south-wd-select' class='wd-select list-group-item select-item active' data-dir='S'>South</li>
+			<li id='southwest-wd-select' class='wd-select list-group-item select-item active' data-dir='SW'>Southwest</li>
+			<li id='west-wd-select' class='wd-select list-group-item select-item active' data-dir='W'>West</li>
+			<li id='northwest-wd-select' class='wd-select list-group-item select-item active' data-dir='NW'>Northwest</li>
+		</ul>
+		<div id='wind-speed-select-holder'>
+			<label>Wind speed</label><br />
+			<ul class='list-group control-list' id='wind-speed-select-list'>
+				<li id='none-ws-select' class='ws-select list-group-item select-item active' data-speed='No Wind'>No Wind</li>
+				<li id='calm-ws-select' class='ws-select list-group-item select-item active' data-speed='Calm'>Calm (1-5 m/s.)</li>
+				<li id='moderate-ws-select' class='ws-select list-group-item select-item active' data-speed='Moderate'>Moderate (5-15 m/s)</li>
+				<li id='high-ws-select' class='ws-select list-group-item select-item active' data-speed='High'>High (15-25 m/s)</li>
+				<li id='hurricane-ws-select' class='ws-select list-group-item select-item active' data-speed='Hurricane'>Hurricane (25+ m/s)</li>
+			</ul>
+		</div>
+		
+	</div>
+	
+		<div id='feed-panel' class='nav-panel control-panel'>
+			<!-- <div id='feed-controls'>
+				<h4 id='feed-control-header'>Captain's Feed</h4>
+			<button id='minimize-feed-panel'><span class='glyphicon glyphicon-minus' id='feed-panel-glyph'></span></button>
+			</div>  -->
+			<div  id='feed-window' class='display-none row'>
+
+				<div class='' id='memoSelectControls'>
+
+							<h3 id="panel_title">Wooden Ships</h3>
+			<h3 class="title">Captain's Logbook</h3>
+
+					<label>Weather Reports</label><input type='checkbox' value='weatherReport' class='memoSelect' checked> <br />
+					<label>Travel Reports</label><input type='checkbox' value='travelReport' class='memoSelect' checked><br />
+					<label>Conflict</label><input type='checkbox' value='Conflict' class='memoSelect' checked><br />
+					<label>Life on Board</label><input type='checkbox' value='LifeOnBoard' class='memoSelect' checked><br />
+					<label>Encounters</label><input type='checkbox' value='Encounter' class='memoSelect' checked><br />
+				</div>
+				<ul class='list-group row' id='feed' >
+					<li class='log list-group-item col-xs-8' id='no-logs'>Select a hexagon to see the captain's logs for that place.</li>
+				</ul>
+			</div>
+	</div>
+
+	<div id='timeline'> </div>
+
+	<div id="slider-range"></div>
+	
+	<div id='loading'>
+		
+	</div>
+
+
+	<!--My Libraries-->
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="assets/lib/d3.min.js"></script>
+	<script type="text/javascript" src="assets/lib/d3-queue.v2.min.js"></script>
+	<script type="text/javascript" src="assets/lib/topojson.v1.min.js"></script>
+	<script type="text/javascript" src="assets/lib/d3.geo.projection.min.js"></script>
+	<script type="text/javascript" src="assets/lib/underscore-min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+	<script src="assets/lib/hexbin.min.js"></script>
+	<script src="assets/lib/custom_hovercard.js"></script>
+
+	<!--My Script-->
+	<script type="text/javascript" src="assets/js/main.js"></script>
+</body>
+</html>
